@@ -1,0 +1,56 @@
+src/
+├── app.module.ts              # Root module
+├── main.ts                    # Entry point
+├── modules/                   # Feature-specific modules
+│   ├── auth/                  # Auth module
+│   │   ├── auth.module.ts
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.entity.ts
+│   │   └── dto/
+│   │       ├── login.dto.ts
+│   │       └── register.dto.ts
+│   ├── classe/                # Classe module
+│   │   ├── classe.module.ts
+│   │   ├── classe.controller.ts
+│   │   ├── classe.service.ts
+│   │   ├── entities/
+│   │   │   └── classe.entity.ts
+│   │   └── dto/
+│   │       ├── create-classe.dto.ts
+│   │       └── update-classe.dto.ts
+│   ├── enseignant/            # Enseignant module
+│   │   ├── enseignant.module.ts
+│   │   ├── enseignant.controller.ts
+│   │   ├── enseignant.service.ts
+│   │   ├── entities/
+│   │   │   └── enseignant.entity.ts
+│   │   └── dto/
+│   │       ├── create-enseignant.dto.ts
+│   │       └── update-enseignant.dto.ts
+│   └── ...                    # Other feature modules
+├── common/                    # Shared modules and utilities
+│   ├── decorators/            # Custom decorators
+│   │   └── roles.decorator.ts
+│   ├── filters/               # Global filters
+│   │   └── http-exception.filter.ts
+│   ├── interceptors/          # Interceptors
+│   │   └── logging.interceptor.ts
+│   ├── guards/                # Guards
+│   │   └── auth.guard.ts
+│   ├── middlewares/           # Middlewares
+│   │   └── logger.middleware.ts
+│   └── pipes/                 # Custom pipes
+│       └── validation.pipe.ts
+├── config/                    # Configuration files
+│   ├── database.config.ts     # Database configuration
+│   ├── app.config.ts          # Application-level config
+│   └── ...
+├── entities/                  # Shared entities (if needed)
+│   └── base.entity.ts         # Base entity with common properties
+├── repositories/              # Custom repositories (if applicable)
+│   └── generic.repository.ts
+├── migrations/                # TypeORM migrations
+│   └── ...
+└── utils/                     # Helper utilities
+    └── date.util.ts
