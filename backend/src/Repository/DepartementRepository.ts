@@ -2,6 +2,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Departement } from 'src/enttities/Departement';
 import { Filiere } from 'src/enttities/Filiere';
+import { Pageable } from 'src/Page/Pageable';
 
 @EntityRepository(Departement)
 export class DepartementRepository extends Repository<Departement> {
@@ -11,13 +12,10 @@ export class DepartementRepository extends Repository<Departement> {
 
   async searchWithPagination(
     keyword: string,
-    skip: number,
-    take: number,
+    pageable:Pageable
   ): Promise<[Departement[], number]> {
     return this.createQueryBuilder('departement')
       .where('departement.libelle LIKE :keyword', { keyword: `%${keyword}%` })
-      .skip(skip)
-      .take(take)
       .getManyAndCount();
   }
 

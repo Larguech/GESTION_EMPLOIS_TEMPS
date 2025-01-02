@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository, EntityRepository, Like } from 'typeorm';
 import { Classe } from 'src/enttities/Classe';
+import { Pageable } from 'src/Page/Pageable';
 
 @Injectable()
 @EntityRepository(Classe)
@@ -20,8 +21,7 @@ export class ClasseRepository extends Repository<Classe> {
   async searchClasses(
     keyword: string,
     sem: number,
-    skip: number,
-    take: number,
+    pageable:Pageable
   ): Promise<[Classe[], number]> {
     return this.createQueryBuilder('classe')
       .innerJoinAndSelect('classe.semestre', 'semestre')
@@ -30,23 +30,28 @@ export class ClasseRepository extends Repository<Classe> {
         sem,
         keyword: `%${keyword}%`,
       })
-      .skip(skip)
-      .take(take)
       .getManyAndCount();
   }
 
   async searchClassesWithoutSemester(
     keyword: string,
-    skip: number,
-    take: number,
+    pageable: Pageable
   ): Promise<[Classe[], number]> {
     return this.createQueryBuilder('classe')
       .innerJoinAndSelect('classe.filiere', 'filiere')
       .where('classe.libelle LIKE :keyword OR filiere.libelle LIKE :keyword', {
         keyword: `%${keyword}%`,
-      })
-      .skip(skip)
-      .take(take)
-      .getManyAndCount();
+      }).getManyAndCount();
+  }
+
+
+  // Method to find a class by ID
+  async findById(id: number): Promise<Classe | undefined> {
+    return this.findOneById(id); // Automatically handles eager relations
+  }
+
+  // Method to delete a class by ID
+  async deleteById(id: number): Promise<void> {
+    await this.delete(id); // Deletes the entity with the given ID
   }
 }

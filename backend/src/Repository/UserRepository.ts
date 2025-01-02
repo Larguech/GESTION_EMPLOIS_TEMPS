@@ -1,33 +1,28 @@
 // src/repositories/user.repository.ts
 import { EntityRepository, Repository } from 'typeorm';
 import { Person } from 'src/enttities/Person';
+import { Pageable } from 'src/Page/Pageable';
 
 @EntityRepository(Person)
 export class UserRepository extends Repository<Person> {
   async findUsersByRole(
     role: string,
-    skip: number,
-    take: number,
+    pageable:Pageable
   ): Promise<[Person[], number]> {
     return this.createQueryBuilder('person')
       .where('person.role = :role', { role })
-      .skip(skip)
-      .take(take)
       .getManyAndCount();
   }
 
   async searchWithPagination(
     keyword: string,
-    skip: number,
-    take: number,
+    pageable:Pageable
   ): Promise<[Person[], number]> {
     return this.createQueryBuilder('person')
       .where('(person.nom LIKE :keyword OR person.prenom LIKE :keyword) AND person.role = :role', {
         keyword: `%${keyword}%`,
         role: 'PROF',
       })
-      .skip(skip)
-      .take(take)
       .getManyAndCount();
   }
 

@@ -25,6 +25,10 @@ import { NonDisponibiliteRepository } from './Repository/NonDisponibiliteReposit
 import { SalleRepository } from './Repository/SalleRepository';
 import { SemestreRepository } from './Repository/SemestreRepository';
 import { UserRepository } from './Repository/UserRepository';
+import { ClasseService } from './services/classe-service-imp/classe-service-imp.service';
+import { DepartementService } from './services/departement-service-imp/departement-service-imp.service';
+import { ElementDeModuleService } from './services/element-de-module-service/element-de-module-service.service';
+import { EmploiDeTempsServiceService } from './services/emploi-de-temps-service/emploi-de-temps-service.service';
 
 
 @Module({
@@ -50,6 +54,6 @@ import { UserRepository } from './Repository/UserRepository';
     ])
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ClasseService, DepartementService, ElementDeModuleService, EmploiDeTempsServiceService],
 })
 export class AppModule {}
