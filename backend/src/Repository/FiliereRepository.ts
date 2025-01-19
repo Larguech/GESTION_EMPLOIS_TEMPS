@@ -1,10 +1,13 @@
 // src/repositories/filiere.repository.ts
-import { EntityRepository, Repository } from 'typeorm';
+import { DataSource, EntityRepository, Repository } from 'typeorm';
 import { Filiere } from 'src/enttities/Filiere';
 import { Pageable } from 'src/Page/Pageable';
 
 @EntityRepository(Filiere)
 export class FiliereRepository extends Repository<Filiere> {
+  constructor(private dataSource: DataSource) {
+      super(Filiere, dataSource.createEntityManager());
+  }
   async searchFilieres(
     keyword: string,
     pageable: Pageable

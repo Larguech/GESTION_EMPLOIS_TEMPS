@@ -29,6 +29,8 @@ import { ClasseService } from './services/classe-service-imp/classe-service-imp.
 import { DepartementService } from './services/departement-service-imp/departement-service-imp.service';
 import { ElementDeModuleService } from './services/element-de-module-service/element-de-module-service.service';
 import { EmploiDeTempsServiceService } from './services/emploi-de-temps-service/emploi-de-temps-service.service';
+import { ClasseControllerController } from './controllers/classe-controller/classe-controller.controller';
+import { DepartementController } from './controllers/departement/departement.controller';
 
 
 @Module({
@@ -48,12 +50,13 @@ import { EmploiDeTempsServiceService } from './services/emploi-de-temps-service/
     }),
     TypeOrmModule.forFeature([Admin,Classe,Departement,ElementDeModule,
       Enseignant,Filiere,Modul,NonDisponibilite,Person,Salle,Semestre,
-      ClasseRepository,DepartementRepository,ElementDeModuleRepository,
-      FiliereRepository,ModuleRepository,NonDisponibiliteRepository,
-      SalleRepository,SemestreRepository,UserRepository
+      /*,ElementDeModuleRepository,
+      ,ModuleRepository,NonDisponibiliteRepository,
+      SalleRepository,SemestreRepository,UserRepository*/
     ])
   ],
-  controllers: [AppController],
-  providers: [AppService, ClasseService, DepartementService, ElementDeModuleService, EmploiDeTempsServiceService],
+  controllers: [AppController, ClasseControllerController, DepartementController],
+  providers: [AppService, ClasseService, DepartementService, ElementDeModuleService, EmploiDeTempsServiceService,
+    ClasseRepository,FiliereRepository ,DepartementRepository],
 })
 export class AppModule {}

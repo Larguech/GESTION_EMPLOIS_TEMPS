@@ -14,6 +14,7 @@ export class Classe {
   @Column()
   nbrEleves: number;
 
+  
   @ManyToOne(() => Filiere, (filiere) => filiere.classes, {
     eager: true,
     nullable: false,

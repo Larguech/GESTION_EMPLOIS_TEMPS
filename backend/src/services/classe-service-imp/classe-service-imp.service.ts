@@ -6,13 +6,23 @@ import { FiliereRepository } from 'src/Repository/FiliereRepository';
 import { Page } from 'src/Page/Page';
 import { Pageable } from 'src/Page/Pageable';
 import { IClasseService } from '../IClasseService';
+import { IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
-export class ClasseService implements IClasseService {
+export class ClasseService  {
+
+  
   constructor(
-    private readonly classeRepository: ClasseRepository,
-    private readonly filiereRepository: FiliereRepository,
-  ) {}
+    //@InjectRepository(ClasseRepository)
+    private  classeRepository: ClasseRepository,
+    //@InjectRepository(FiliereRepository)
+    private  filiereRepository:FiliereRepository,
+    
+  ) {
+    
+  }
 
   
   async getClasses(): Promise<Classe[]> {
@@ -21,7 +31,7 @@ export class ClasseService implements IClasseService {
 
   
   async addClasse(classe: Classe, id: number): Promise<Classe> {
-    const filiere = await this.filiereRepository.findById(id);
+    const filiere = await this.filiereRepository.findOneById(id);
     if (!filiere) {
       throw new Error(`La filiere avec id=${id} n'existe pas!`);
     }
@@ -77,4 +87,20 @@ export class ClasseService implements IClasseService {
     return await this.classeRepository.searchClassesBySemester(keyword, sem, pageable);
   }
     */
+
+  async searchClassesWithSemister(keyword: string,
+      semId: number | null,
+      options: IPaginationOptions,): Promise<Pagination<Classe>>{
+         return await this.classeRepository.searchClassesWithSemister(keyword,
+          semId,
+          options)
+      }
+
+  async searchClasses(keyword: string,
+    options: IPaginationOptions,): Promise<Pagination<Classe>>{
+      return await this.classeRepository.searchClasses(keyword,
+        options)
+    }
+
+  /* getClasses(Pageable pageable)*/ 
 }

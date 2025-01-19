@@ -3,14 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Departement } from 'src/enttities/Departement';
 import { Filiere } from 'src/enttities/Filiere';
+import { IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
+import { DepartementRepository } from 'src/Repository/DepartementRepository';
+import { FiliereRepository } from 'src/Repository/FiliereRepository';
 
 @Injectable()
 export class DepartementService {
   constructor(
-    @InjectRepository(Departement)
-    private readonly departementRepository: Repository<Departement>,
-    @InjectRepository(Filiere)
-    private readonly filiereRepository: Repository<Filiere>,
+  
+    private departementRepository: DepartementRepository,
+    
+    private filiereRepository: FiliereRepository,
   ) {}
 
   // Get all departements
@@ -60,5 +63,9 @@ export class DepartementService {
   async getFilieresByDepartmentId(id: number): Promise<Filiere[]> {
     const departement = await this.getDepartementById(id);
     return this.filiereRepository.find({ where: { departement } });
+  }
+
+  async searchDepartement(keyword:string,options:IPaginationOptions):Promise<Pagination<Departement>>{
+     return this.departementRepository.searchWithPagination(keyword,options);
   }
 }
