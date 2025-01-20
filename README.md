@@ -21,4 +21,5 @@ The project uses environment variables to configure settings such as the server,
    PORT=3000
    ```
 
-Endpoint for both controller are tested but not all because some endpoints require the full backend to be tested and the pagination methos are not tested yat
+Endpoint for all controllers are tested but not all because some endpoints require the full backend to be tested and the pagination methos are not tested yet
+

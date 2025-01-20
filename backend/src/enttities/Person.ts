@@ -13,7 +13,7 @@ export class Person {
   @Column()
   nom: string;
 
-  @Column({ name: 'ROLE', insert: false, update: false })
+  @Column()
   Role: string;
 
   @Column()

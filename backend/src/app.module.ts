@@ -31,6 +31,10 @@ import { ElementDeModuleService } from './services/element-de-module-service/ele
 import { EmploiDeTempsServiceService } from './services/emploi-de-temps-service/emploi-de-temps-service.service';
 import { ClasseControllerController } from './controllers/classe-controller/classe-controller.controller';
 import { DepartementController } from './controllers/departement/departement.controller';
+import { ElementdemoduleController } from './controllers/elementdemodule/elementdemodule.controller';
+import { EnseignantService } from './services/enseignant/enseignant.service';
+import { EnseignantRepository } from './Repository/EnseignantRepository';
+import { EnseignantController } from './controllers/enseignant/enseignant.controller';
 
 
 @Module({
@@ -55,8 +59,10 @@ import { DepartementController } from './controllers/departement/departement.con
       SalleRepository,SemestreRepository,UserRepository*/
     ])
   ],
-  controllers: [AppController, ClasseControllerController, DepartementController],
+  controllers: [AppController, ClasseControllerController, DepartementController, ElementdemoduleController, EnseignantController],
   providers: [AppService, ClasseService, DepartementService, ElementDeModuleService, EmploiDeTempsServiceService,
-    ClasseRepository,FiliereRepository ,DepartementRepository],
+    EnseignantService,ClasseRepository,FiliereRepository ,DepartementRepository,
+    ElementDeModuleRepository, EnseignantService,
+    UserRepository,EnseignantRepository],
 })
 export class AppModule {}

@@ -1,11 +1,16 @@
 // src/repositories/element-de-module.repository.ts
-import { EntityRepository, Repository } from 'typeorm';
+import { DataSource, EntityRepository, Repository } from 'typeorm';
 import { ElementDeModule } from 'src/enttities/ElementDeModule';
 import { DayOfWeek } from 'src/enttities/enums/DayofWeek';
 import { Periode } from 'src/enttities/enums/Periode';
 
 @EntityRepository(ElementDeModule)
 export class ElementDeModuleRepository extends Repository<ElementDeModule> {
+  
+  constructor(private dataSource: DataSource) {
+      super(ElementDeModule, dataSource.createEntityManager());
+  }
+  
   async getEmploisByClasse(classeId: number): Promise<ElementDeModule[]> {
     return this.createQueryBuilder('element')
       .innerJoinAndSelect('element.module', 'module')

@@ -2,6 +2,7 @@
 import { DataSource, EntityRepository, Repository } from 'typeorm';
 import { Filiere } from 'src/enttities/Filiere';
 import { Pageable } from 'src/Page/Pageable';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
 
 @EntityRepository(Filiere)
 export class FiliereRepository extends Repository<Filiere> {
@@ -10,11 +11,13 @@ export class FiliereRepository extends Repository<Filiere> {
   }
   async searchFilieres(
     keyword: string,
-    pageable: Pageable
-  ): Promise<[Filiere[], number]> {
-    return this.createQueryBuilder('filiere')
-      .where('filiere.libelle LIKE :keyword', { keyword: `%${keyword}%` })
-      .getManyAndCount();
+    options:IPaginationOptions,
+  ): Promise<Pagination<Filiere>> {
+    const queryBuilder = this.createQueryBuilder('filiere');
+
+    queryBuilder.where('filiere.libelle LIKE :keyword', { keyword: `%${keyword}%` });
+
+    return paginate<Filiere>(queryBuilder, options);
   }
 
   async findById(id: number): Promise<Filiere | undefined> {

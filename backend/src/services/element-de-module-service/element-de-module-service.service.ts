@@ -3,14 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ElementDeModule } from 'src/enttities/ElementDeModule';
 import { Classe } from 'src/enttities/Classe';
+import { ClasseRepository } from 'src/Repository/ClasseRepository';
+import { ElementDeModuleRepository } from 'src/Repository/ElementModuleRepository';
 
 @Injectable()
 export class ElementDeModuleService {
   constructor(
-    @InjectRepository(ElementDeModule)
-    private readonly elementDeModuleRepository: Repository<ElementDeModule>,
-    @InjectRepository(Classe)
-    private readonly classeRepository: Repository<Classe>,
+    
+    private readonly elementDeModuleRepository: ElementDeModuleRepository
+    
+    
   ) {}
 
   // Get all ElementDeModule
@@ -52,7 +54,7 @@ export class ElementDeModuleService {
   }
 
   // Get all ElementDeModule for a specific Classe by its ID
-  async getEmploisByClasse(classeId: number): Promise<ElementDeModule[]> {
+  /*async getEmploisByClasse(classeId: number): Promise<ElementDeModule[]> {
     const classe = await this.classeRepository.findOneById(classeId);
     if (!classe) {
       throw new NotFoundException(`Classe with ID ${classeId} not found.`);
@@ -60,5 +62,9 @@ export class ElementDeModuleService {
 
     // Flatten all ElementDeModule from modules of the class
     return classe.modules.flatMap((module) => module.elementDeModules);
-  }
+  }*/
+   
+    async getEmploisByClasse(classeId: number): Promise<ElementDeModule[]>{
+      return this.elementDeModuleRepository.getEmploisByClasse(classeId);
+    }
 }

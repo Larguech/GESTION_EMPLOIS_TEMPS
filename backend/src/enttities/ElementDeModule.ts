@@ -26,7 +26,7 @@ export class ElementDeModule {
   @Column({
     type: 'enum',
     enum: Periode,
-    nullable: false,
+    //nullable: false,
   })
   periode: Periode;
 
