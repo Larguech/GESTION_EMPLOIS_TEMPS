@@ -35,6 +35,13 @@ import { ElementdemoduleController } from './controllers/elementdemodule/element
 import { EnseignantService } from './services/enseignant/enseignant.service';
 import { EnseignantRepository } from './Repository/EnseignantRepository';
 import { EnseignantController } from './controllers/enseignant/enseignant.controller';
+import { FiliereService } from './services/filiere/filiere.service';
+import { FiliereController } from './controllers/filiere/filiere.controller';
+import { ModuleService } from './services/module/module.service';
+import { ModuleController } from './controllers/module/module.controller';
+import { NonDisponibiliteService } from './services/non-disponibilite/non-disponibilite.service';
+import { NonDisponibiliteController } from './controllers/non-disponibilite/non-disponibilite.controller';
+
 
 
 @Module({
@@ -59,10 +66,11 @@ import { EnseignantController } from './controllers/enseignant/enseignant.contro
       SalleRepository,SemestreRepository,UserRepository*/
     ])
   ],
-  controllers: [AppController, ClasseControllerController, DepartementController, ElementdemoduleController, EnseignantController],
+  controllers: [AppController, ClasseControllerController, DepartementController, ElementdemoduleController, EnseignantController, FiliereController, ModuleController, NonDisponibiliteController],
   providers: [AppService, ClasseService, DepartementService, ElementDeModuleService, EmploiDeTempsServiceService,
     EnseignantService,ClasseRepository,FiliereRepository ,DepartementRepository,
     ElementDeModuleRepository, EnseignantService,
-    UserRepository,EnseignantRepository],
+    UserRepository,EnseignantRepository, FiliereService, ModuleService,ModuleRepository,
+    NonDisponibiliteService,NonDisponibiliteRepository],
 })
 export class AppModule {}

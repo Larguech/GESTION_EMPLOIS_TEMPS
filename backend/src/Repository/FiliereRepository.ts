@@ -23,4 +23,12 @@ export class FiliereRepository extends Repository<Filiere> {
   async findById(id: number): Promise<Filiere | undefined> {
       return this.findOneById(id); // Automatically handles eager relations
     }
+
+  async findallfiliere(options:IPaginationOptions):Promise<Pagination<Filiere>>{
+    const queryBuilder=this.createQueryBuilder('filiere');
+    queryBuilder.select()
+    .getMany()
+
+    return paginate<Filiere>(queryBuilder,options);
+  }
 }

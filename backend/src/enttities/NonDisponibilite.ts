@@ -13,11 +13,16 @@ export class NonDisponibilite {
     @Column({
       type: 'enum',
       enum: DayOfWeek,
-      nullable: false,
+      
     })
     jour: DayOfWeek; // Day of the week
   
-    @Column()
+    @Column({
+        type: 'enum',
+        enum: Periode,
+        
+      
+    })
     periode: Periode;
   
     @ManyToOne(() => Enseignant, (enseignant) => enseignant.nonDisponibilites)
