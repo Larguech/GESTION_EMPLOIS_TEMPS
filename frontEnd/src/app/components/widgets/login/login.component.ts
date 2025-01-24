@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     const password = this.password?.value;
 
     this.authService.login(username, password).subscribe(response => {
-      if(response.authenticated==true){
+      if(response.authenticated==false){
         console.log(response);
 
         this.authService.loggedIn = response.authenticated;
