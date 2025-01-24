@@ -16,14 +16,9 @@ export class Filiere {
   @Column({ nullable: true })
   chefFiliere: string; // Optional field for the head of the Filiere
 
-  @OneToMany(() => Classe, (classe) => classe.filiere, {
-    eager: false,
-    cascade: true,
-  })
+  @OneToMany(() => Classe, (classe) => classe.filiere)
   classes: Classe[];
 
-  @ManyToOne(() => Departement, (departement) => departement.filieres, {
-    eager: true,
-  })
+  @ManyToOne(() => Departement, (departement) => departement.filieres)
   departement: Departement;
 }

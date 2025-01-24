@@ -6,17 +6,9 @@ import { ElementDeModule } from "./ElementDeModule";
 @Entity()
 //@ChildEntity('ADMIN') // Specifies the discriminator value
 export class Admin extends Person{
-      @OneToMany(() => NonDisponibilite, (nonDisponibilite) => nonDisponibilite.enseignant, {
-        /*eager: true,
-        cascade: true,*/
-        
-      })
+      @OneToMany(() => NonDisponibilite, (nonDisponibilite) => nonDisponibilite.enseignant)
       nonDisponibilites: NonDisponibilite[];
     
-      @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.enseignant, {
-        eager: true,
-        cascade: true,
-        
-      })
+      @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.enseignant)
       elementDeModules: ElementDeModule[];
 }

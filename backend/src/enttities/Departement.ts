@@ -12,9 +12,6 @@ export class Departement {
   @Column()
   chefDepartement: string;
 
-  @OneToMany(() => Filiere, (filiere) => filiere.departement, {
-    eager: false,
-    cascade: true,
-  })
+  @OneToMany(() => Filiere, (filiere) => filiere.departement)
   filieres: Filiere[];
 }

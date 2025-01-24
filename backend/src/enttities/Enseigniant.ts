@@ -9,15 +9,10 @@ export class Enseignant extends Person {
   @Column()
   specialite: string;
 
-  @OneToMany(() => NonDisponibilite, (nonDisponibilite) => nonDisponibilite.enseignant, {
-    eager: true,
-    cascade: true,})
+  @OneToMany(() => NonDisponibilite, (nonDisponibilite) => nonDisponibilite.enseignant)
   nonDisponibilites: NonDisponibilite[];
 
-  @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.enseignant, {
-        eager: true,
-        cascade: true,
-      }
+  @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.enseignant
   )
   elementDeModules: ElementDeModule[];
 }

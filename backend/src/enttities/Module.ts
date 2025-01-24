@@ -19,14 +19,9 @@ export class Modul {
   @Column({ default: false })
   isMetuale: boolean;
 
-  @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.module, {
-    
-    cascade: true,
-  })
+  @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.module)
   elementDeModules: ElementDeModule[];
 
-  @ManyToOne(() => Classe, (classe) => classe.modules, {
-    eager: true,
-  })
+  @ManyToOne(() => Classe, (classe) => classe.modules)
   classe: Classe;
 }

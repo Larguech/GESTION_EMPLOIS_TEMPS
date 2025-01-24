@@ -121,7 +121,7 @@ import { RolesGuard } from './guard/rolesguard/rolesguard.guard';
        
         isAuthentificated: false,
         nonDisponibilites:[],
-        elementDeModules:[]
+        elementDeModules:[],
       };
 
       const defaultprof={
@@ -140,7 +140,7 @@ import { RolesGuard } from './guard/rolesguard/rolesguard.guard';
         isAuthentificated: false,
         specialite:"reseau",
         nonDisponibilites:[],
-        elementDeModules:[]
+        elementDeModules:[],
 
       }
   
