@@ -9,12 +9,14 @@ export class Admin extends Person{
       @OneToMany(() => NonDisponibilite, (nonDisponibilite) => nonDisponibilite.enseignant, {
         /*eager: true,
         cascade: true,*/
+        
       })
       nonDisponibilites: NonDisponibilite[];
     
       @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.enseignant, {
         eager: true,
         cascade: true,
+        
       })
       elementDeModules: ElementDeModule[];
 }

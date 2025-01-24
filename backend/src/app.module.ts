@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -41,13 +41,31 @@ import { ModuleService } from './services/module/module.service';
 import { ModuleController } from './controllers/module/module.controller';
 import { NonDisponibiliteService } from './services/non-disponibilite/non-disponibilite.service';
 import { NonDisponibiliteController } from './controllers/non-disponibilite/non-disponibilite.controller';
-
+import { SalleService } from './services/salle/salle.service';
+import { SalleController } from './controllers/salle/salle.controller';
+import { SemestreService } from './services/semestre/semestre.service';
+import { SemestreController } from './controllers/semestre/semestre.controller';
+import { AuthService } from './services/auth/auth.service';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './services/auth/jwt.strategy';
+import { AuthController } from './controllers/auth/auth.controller';
+import { AdminService } from './services/dmin/dmin.service';
+import { AdminController } from './controllers/admin/admin.controller';
+import * as bcrypt from 'bcrypt';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guard/rolesguard/rolesguard.guard';
 
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    PassportModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1h' },
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -66,11 +84,72 @@ import { NonDisponibiliteController } from './controllers/non-disponibilite/non-
       SalleRepository,SemestreRepository,UserRepository*/
     ])
   ],
-  controllers: [AppController, ClasseControllerController, DepartementController, ElementdemoduleController, EnseignantController, FiliereController, ModuleController, NonDisponibiliteController],
+  controllers: [AppController, ClasseControllerController, DepartementController, ElementdemoduleController, EnseignantController, FiliereController, ModuleController, NonDisponibiliteController, SalleController, SemestreController, AuthController, AdminController],
   providers: [AppService, ClasseService, DepartementService, ElementDeModuleService, EmploiDeTempsServiceService,
     EnseignantService,ClasseRepository,FiliereRepository ,DepartementRepository,
     ElementDeModuleRepository, EnseignantService,
     UserRepository,EnseignantRepository, FiliereService, ModuleService,ModuleRepository,
-    NonDisponibiliteService,NonDisponibiliteRepository],
+    NonDisponibiliteService,NonDisponibiliteRepository, SalleService,SalleRepository,
+    SemestreService,SemestreRepository, 
+    AuthService,JwtStrategy, AdminService,UserRepository,
+  
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },],
 })
-export class AppModule {}
+
+
+  export class AppModule implements OnModuleInit {
+    constructor(private readonly adminService: AdminService,
+                private readonly enseignantservice:EnseignantService
+    ) {}
+  
+    async onModuleInit() {
+      const defaultAdmin = {
+        id:1,
+        civilite:"",
+        nom: 'wajih',
+        Role: 'ADMIN',
+        prenom: 'hammami',
+        tel:"111",
+        cne:"111" ,
+        email: 'admin@example.com',
+        login: 'admin',
+       
+        password: await bcrypt.hash('admin', 10), // Encrypt the password
+       
+        isAuthentificated: false,
+        nonDisponibilites:[],
+        elementDeModules:[]
+      };
+
+      const defaultprof={
+        id:2,
+        civilite:"",
+        nom: "ossama",
+        Role: "PROF",
+        prenom: "ferjani",
+        tel:"111",
+        cne:"111" ,
+        email: "prof@example.com",
+        login: "prof",
+       
+        password: await bcrypt.hash('prof', 10), // Encrypt the password
+       
+        isAuthentificated: false,
+        specialite:"reseau",
+        nonDisponibilites:[],
+        elementDeModules:[]
+
+      }
+  
+      
+        await this.adminService.addadmin(defaultAdmin);
+        console.log('Default admin has been created.');
+        await this.enseignantservice.addEnseignant(defaultprof)
+        console.log('Default prof has been created.');
+      
+    }
+  }
+
