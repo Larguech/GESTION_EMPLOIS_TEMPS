@@ -30,14 +30,10 @@ export class ElementDeModule {
   })
   periode: Periode;
 
-  @ManyToOne(() => Salle, (salle) => salle.elementDeModules, {
-    eager: true,
-  })
+  @ManyToOne(() => Salle, (salle) => salle.elementDeModules)
   salle: Salle;
 
-  @ManyToOne(() => Modul, (module) => module.elementDeModules, {
-    eager: true,
-  })
+  @ManyToOne(() => Modul, (module) => module.elementDeModules)
   module: Modul;
 
   @ManyToOne(() => Enseignant, (enseignant) => enseignant.elementDeModules, {

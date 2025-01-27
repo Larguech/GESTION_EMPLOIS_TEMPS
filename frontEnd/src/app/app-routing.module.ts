@@ -21,10 +21,12 @@ import {EditFiliereComponent} from "./components/edit/edit-filiere/edit-filiere.
 import {EditClasseComponent} from "./components/edit/edit-classe/edit-classe.component";
 import { EditProfileComponent } from './components/edit/edit-profile/edit-profile.component';
 import { NonDisponibleComponent } from './components/gestion/non-disponible/non-disponible.component';
+import { AuthGuard } from './auth/auth.guard';
+import { LoginComponent } from './components/widgets/login/login.component';
 const routes: Routes = [
   { path :'' , component: HomeComponent},
   { path :'index' , component: IndexPageComponent},
-    { path :'home' , component: HomeComponent},
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
     { path :'profs' , component: GestionProfComponent},
     { path :'profs/add' , component: AddNewProfComponent},
     { path :'filieres' , component: GestionFiliereComponent},
@@ -43,6 +45,7 @@ const routes: Routes = [
     { path :'classes/edit' , component: EditClasseComponent},
     { path :'profile/edit' , component: EditProfileComponent},
     { path :'nonDesponibles' , component: NonDisponibleComponent},
+    
     // not-found
     { path :'**' , component: NotFoundComponent},
 ];

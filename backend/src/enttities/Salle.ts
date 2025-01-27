@@ -20,9 +20,6 @@ export class Salle {
   })
   typeSalle: TypeSalle;
 
-  @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.salle, {
-    
-    cascade: true,
-  })
+  @OneToMany(() => ElementDeModule, (elementDeModule) => elementDeModule.salle)
   elementDeModules: ElementDeModule[];
 }

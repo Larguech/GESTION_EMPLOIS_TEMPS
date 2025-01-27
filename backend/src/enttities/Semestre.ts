@@ -22,9 +22,6 @@ export class Semestre {
   @Column()
   anneeUniv: string; // Example: '2022-2023'
 
-  @OneToMany(() => Classe, (classe) => classe.semestre, {
-    eager: false,
-    cascade: true,
-  })
+  @OneToMany(() => Classe, (classe) => classe.semestre)
   classes: Classe[];
 }

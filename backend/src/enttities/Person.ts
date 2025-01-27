@@ -7,31 +7,31 @@ export class Person {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true,default:"" })
   civilite: string;
 
-  @Column()
+  @Column({default:""})
   nom: string;
 
-  @Column()
+  @Column({default:""})
   Role: string;
 
-  @Column()
+  @Column({default:""})
   prenom: string;
 
-  @Column()
+  @Column({default:""})
   tel: string;
 
-  @Column()
+  @Column({default:""})
   cne: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true,default:"" })
   email: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true,default:"" })
   login: string;
 
-  @Column()
+  @Column({default:""})
   password: string;
 
   @Column({ default: false })

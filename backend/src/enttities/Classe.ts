@@ -16,7 +16,7 @@ export class Classe {
 
   
   @ManyToOne(() => Filiere, (filiere) => filiere.classes, {
-    eager: true,
+  
     nullable: false,
   })
   filiere: Filiere;
@@ -28,7 +28,7 @@ export class Classe {
   modules: Modul[];
 
   @ManyToOne(() => Semestre, (semestre) => semestre.classes, {
-    eager: true,
+    
     nullable: false,
   })
   semestre: Semestre;
