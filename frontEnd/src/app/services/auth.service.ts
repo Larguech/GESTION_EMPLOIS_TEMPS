@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -44,15 +44,21 @@ export class AuthService {
     return this.cookieService.get('authToken');
   }
 
-  logout(): void {
-    // Remove cookies and reset the state
-    this.cookieService.deleteAll();
-    this.loggedIn = false;
-    this.token = '';
-    this.id = 0;
-    this.name = '';
-    this.isAdmin = false;
-    this.isProf = false;
+  logout(userId: number): Observable<any> {
+    // Example API call for server-side logout
+    return this.http.post(environment.backendHost + '/auth/logout', { userId }).pipe(
+      shareReplay(1), // Cache the response for consistent use
+      // Optionally, clean up local state on logout response
+      tap(() => {
+        this.cookieService.deleteAll();
+        this.loggedIn = false;
+        this.token = '';
+        this.id = 0;
+        this.name = '';
+        this.isAdmin = false;
+        this.isProf = false;
+      })
+    );
   }
 
   isAuthenticated(): boolean {
