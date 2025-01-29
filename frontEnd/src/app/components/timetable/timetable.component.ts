@@ -67,17 +67,24 @@ let day = this.changeDay(days).toUpperCase();
 getPeriode(timeSlot: string): string {
   let prd = "";
   switch (timeSlot) {
-    case "8h30-10h30":
+    case "8h-09h30":
       prd = "P1";
       break;
-    case "10h30-12h30":
+    case "09h45-11h15":
       prd = "P2";
       break;
-    case "14h-16h":
+    case "11h30-13h":
       prd = "P3";
       break;
-    case "16h-18h":
-      prd = "P4";
+    case "14h-15h30":
+        prd = "P4";
+        break;
+    
+    case "15h45-17h15":
+        prd = "P5";
+        break;    
+    case "17h30-19h":
+      prd = "P6";
       break;
     default:
       break;
@@ -102,6 +109,9 @@ changeDay(day:string){
     case "Vendredi":
       prd = "Friday";
       break;
+    case "Samedi":
+      prd = "Saturday";
+      break; 
     default:
       break;
 }

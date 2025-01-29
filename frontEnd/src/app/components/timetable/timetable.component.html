@@ -92,10 +92,12 @@
               <thead>
                 <tr>
                   <th>Jours</th>
-                  <th>8h30-10h30</th>
-                  <th>10h30-12h30</th>
-                  <th>14h-16h</th>
-                  <th class="last">16h-18h</th>
+                  <th>8h-09h30</th>
+                  <th>09h45-11h15</th>
+                  <th>11h30-13h</th>
+                  <th>14h-15h30</th>
+                  <th>15h45-17h15</th>
+                  <th class="last">17h30-19h</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,52 +117,73 @@
                   <td class="day">{{ day }}</td>
                   <ng-container *ngIf="ready">
                     <ng-container *ngIf="day !== 'Samedi'">
-                      <ng-container *ngIf="hasModule(day, '8h30-10h30')">
+                      <ng-container *ngIf="hasModule(day, '8h-09h30')">
                         <td class="active" style="width: 200px">
-                          <h4>{{ getModuleTitle(day, "8h30-10h30") }}</h4>
-                          <p>{{ getModuleRoom(day, "8h30-10h30") }}</p>
-                          <span>{{ getModuleTeacher(day, "8h30-10h30") }}</span>
+                          <h4>{{ getModuleTitle(day, "8h-09h30") }}</h4>
+                          <p>{{ getModuleRoom(day, "8h-09h30") }}</p>
+                          <span>{{ getModuleTeacher(day, "8h-09h30") }}</span>
                         </td>
                       </ng-container>
-                      <ng-container *ngIf="!hasModule(day, '8h30-10h30')">
+                      <ng-container *ngIf="!hasModule(day, '8h-09h30')">
                         <td></td>
                       </ng-container>
-                      <ng-container *ngIf="hasModule(day, '10h30-12h30')">
+                      <ng-container *ngIf="hasModule(day, '09h45-11h15')">
                         <td class="active" style="width: 200px">
-                          <h4>{{ getModuleTitle(day, "10h30-12h30") }}</h4>
-                          <p>{{ getModuleRoom(day, "10h30-12h30") }}</p>
+                          <h4>{{ getModuleTitle(day, "11h30-13h") }}</h4>
+                          <p>{{ getModuleRoom(day, "09h45-11h15") }}</p>
                           <span>{{
-                            getModuleTeacher(day, "10h30-12h30")
+                            getModuleTeacher(day, "09h45-11h15")
                           }}</span>
                         </td>
                       </ng-container>
-                      <ng-container *ngIf="!hasModule(day, '10h30-12h30')">
+                      <ng-container *ngIf="!hasModule(day, '09h45-11h15')">
                         <td></td>
                       </ng-container>
-                      <ng-container *ngIf="hasModule(day, '14h-16h')">
+                      <ng-container *ngIf="hasModule(day, '11h30-13h')">
                         <td class="active" style="width: 200px">
-                          <h4>{{ getModuleTitle(day, "14h-16h") }}</h4>
+                          <h4>{{ getModuleTitle(day, "11h30-13h") }}</h4>
+                          <p>{{ getModuleRoom(day, "11h30-13h") }}</p>
+                          <span>{{ getModuleTeacher(day, "11h30-13h") }}</span>
+                        </td>
+                      </ng-container>
+                      <ng-container *ngIf="!hasModule(day, '11h30-13h')">
+                        <td></td>
+                      </ng-container>
+                      <ng-container *ngIf="hasModule(day, '14h-15h30')">
+                        <td class="active" style="width: 200px">
+                          <h4>{{ getModuleTitle(day, "14h-15h30") }}</h4>
                           <p>{{ getModuleRoom(day, "14h-16h") }}</p>
-                          <span>{{ getModuleTeacher(day, "14h-16h") }}</span>
+                          <span>{{ getModuleTeacher(day, "14h-15h30") }}</span>
                         </td>
                       </ng-container>
-                      <ng-container *ngIf="!hasModule(day, '14h-16h')">
+                      <ng-container *ngIf="!hasModule(day, '14h-15h30')">
                         <td></td>
                       </ng-container>
-                      <ng-container *ngIf="hasModule(day, '16h-18h')">
+                      <ng-container *ngIf="hasModule(day, '15h45-17h15')">
                         <td class="active" style="width: 200px">
-                          <h4>{{ getModuleTitle(day, "16h-18h") }}</h4>
-                          <p>{{ getModuleRoom(day, "16h-18h") }}</p>
-                          <span>{{ getModuleTeacher(day, "16h-18h") }}</span>
+                          <h4>{{ getModuleTitle(day, "15h45-17h15") }}</h4>
+                          <p>{{ getModuleRoom(day, "15h45-17h15") }}</p>
+                          <span>{{ getModuleTeacher(day, "15h45-17h15") }}</span>
                         </td>
                       </ng-container>
-                      <ng-container *ngIf="!hasModule(day, '16h-18h')">
+                      <ng-container *ngIf="!hasModule(day, '15h45-17h15')">
+                        <td></td>
+                      </ng-container>
+                      <ng-container *ngIf="hasModule(day, '17h30-19h')">
+                        <td class="active" style="width: 200px">
+                          <h4>{{ getModuleTitle(day, "17h30-19h") }}</h4>
+                          <p>{{ getModuleRoom(day, "17h30-19h") }}</p>
+                          <span>{{ getModuleTeacher(day, "17h30-19h") }}</span>
+                        </td>
+                      </ng-container>
+                      <ng-container *ngIf="!hasModule(day, '17h30-19h')">
                         <td></td>
                       </ng-container>
                     </ng-container>
-                    <td class="active" colspan="4" *ngIf="day === 'Samedi'">
+                    
+                    <!-- <td class="active" colspan="4" *ngIf="day === 'Samedi'">
                       <h4>Controle et Rattrapage</h4>
-                    </td>
+                    </td> -->
                   </ng-container>
                 </tr>
               </tbody>

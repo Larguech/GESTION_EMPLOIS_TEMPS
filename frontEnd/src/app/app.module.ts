@@ -19,7 +19,7 @@ import { AddNewClasseComponent } from './components/add/add-new-classe/add-new-c
 import { GestionSallesComponent } from './components/gestion/gestion-salles/gestion-salles.component';
 import { AddNewSalleComponent } from './components/add/add-new-salle/add-new-salle.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { TimetableComponent } from './components/timetable/timetable.component';
 import { EditProfComponent } from './components/edit/edit-prof/edit-prof.component';
 import { NotFoundComponent } from './components/widgets/not-found/not-found.component';
@@ -35,7 +35,7 @@ import { LoginComponent } from './components/widgets/login/login.component';
 import { ProfileComponent } from './components/widgets/profile/profile.component';
 import { EditProfileComponent } from './components/edit/edit-profile/edit-profile.component';
 import { NonDisponibleComponent } from './components/gestion/non-disponible/non-disponible.component';
-import { JwtInterceptor } from './auth/jwt.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,11 +78,7 @@ import { JwtInterceptor } from './auth/jwt.interceptor';
      ReactiveFormsModule,
      BrowserAnimationsModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptor,
-    multi: true,
-  },],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
