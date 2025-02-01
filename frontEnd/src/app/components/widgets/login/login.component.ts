@@ -75,4 +75,5 @@ export class LoginComponent implements OnInit {
            Swal.fire('Echec', 'Nom d\'utilisateur ou mot de passe incorrect', 'error');});
 
   }
+  
 }

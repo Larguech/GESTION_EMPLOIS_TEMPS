@@ -22,6 +22,9 @@ ngOnInit() {
 }
 
 handleLogout(){
+  this.cookieService.delete('auth_token');
+  this.cookieService.delete('user_id');
+  this.cookieService.delete('username');
   this.cookieService.delete('role');
 
   this.authService.logout(this.userId).subscribe(response => {

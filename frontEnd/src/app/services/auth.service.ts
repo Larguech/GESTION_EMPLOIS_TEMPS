@@ -1,12 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-<<<<<<< HEAD
 import { Observable, tap } from 'rxjs';
-=======
-import { Observable } from 'rxjs';
-import { shareReplay, tap } from 'rxjs/operators';
->>>>>>> 9843a6c3b9623b44815aa3d3e5eaf3c038b28c12
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,48 +15,54 @@ export class AuthService {
   public token: string = "";
   public id: number = 0;
 
-  constructor(private http: HttpClient,private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
+  
   login(username: string, password: string): Observable<any> {
     const loginData = { username, password };
-    return this.http.post<any>(environment.backendHost +'/auth/login', loginData);
-  }
+    console.log(username);
+    
+    return this.http.post<any>(environment.backendHost + '/auth/login', loginData, {
+      withCredentials: true,
+    }).pipe(
+      tap((response) => {
+        if (response.token) {
+          this.token = response.token;
+          this.name = response.nom;  
+          this.id = response.id;
+          this.isAdmin = response.isAdmin;
+          this.isProf = response.isProf;
+          this.loggedIn = true;
 
-  logout(id:number): Observable<boolean> {
-    // remove cookies
-    this.cookieService.delete('username');
-this.cookieService.delete('userId');
-// Remove more cookies if needed
-
-    return this.http.get<boolean>(environment.backendHost +'/auth/logout/'+id)
-    }
-
-<<<<<<< HEAD
-=======
-  getAuthToken(): string {
-    return this.cookieService.get('authToken');
-  }
-
-  logout(userId: number): Observable<any> {
-    // Example API call for server-side logout
-    return this.http.post(environment.backendHost + '/auth/logout', { userId }).pipe(
-      shareReplay(1), // Cache the response for consistent use
-      // Optionally, clean up local state on logout response
-      tap(() => {
-        this.cookieService.deleteAll();
-        this.loggedIn = false;
-        this.token = '';
-        this.id = 0;
-        this.name = '';
-        this.isAdmin = false;
-        this.isProf = false;
+          this.cookieService.set('auth_token', this.token, { expires: new Date(Date.now() + 3600 * 1000) });
+          this.cookieService.set('user_id', this.id.toString(), { expires: new Date(Date.now() + 3600 * 1000) });
+        }
       })
     );
   }
 
-  isAuthenticated(): boolean {
-    // Check if the user is logged in based on the presence of a token
-    return !!this.cookieService.get('authToken');
+  logout(id: number): Observable<boolean> {
+    this.cookieService.delete('auth_token');
+    this.cookieService.delete('user_id');
+    this.cookieService.delete('username');
+
+    return this.http.get<boolean>(environment.backendHost + '/auth/logout/' + id).pipe(
+      tap(() => {
+        this.loggedIn = false;
+        this.isAdmin = false;
+        this.isProf = false;
+        this.name = '';
+        this.token = '';
+        this.id = 0;
+      })
+    );
   }
->>>>>>> 9843a6c3b9623b44815aa3d3e5eaf3c038b28c12
+
+  isUserLoggedIn(): boolean {
+    return this.loggedIn;
+  }
+
+  getAuthToken(): string {
+    return this.cookieService.get('auth_token');
+  }
 }
