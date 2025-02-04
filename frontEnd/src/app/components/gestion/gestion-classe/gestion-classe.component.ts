@@ -31,6 +31,7 @@ export class GestionClasseComponent implements OnInit {
       keyword: this.fb.control('')
     });
     this.handleSearchClasses();
+    this.getallclasses()
   }
   handleEditeClasse(classeEdit: Classe) {
     this.router.navigateByUrl('/classes/edit',{state :classeEdit});
@@ -110,4 +111,17 @@ export class GestionClasseComponent implements OnInit {
       this.handleSearchClasses();
     }
   }
+
+  getallclasses(): void {
+          this.classeService.getClasses3().subscribe(
+            (data: Classe[]) => {
+              this.classes = data;
+              console.log(this.classes)
+              console.log("hi")
+            },
+            (error) => {
+              console.error('Error fetching departments:', error);
+            }
+          );
+        }
 }

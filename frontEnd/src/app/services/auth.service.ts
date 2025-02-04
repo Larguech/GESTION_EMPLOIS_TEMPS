@@ -1,68 +1,64 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   public loggedIn: boolean = false;
   public isAdmin: boolean = false;
   public isProf: boolean = false;
-  public name: string = "";
-  public token: string = "";
+  public name: string = '';
+  public token: string = '';
   public id: number = 0;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  
-  login(username: string, password: string): Observable<any> {
-    const loginData = { username, password };
-    console.log(username);
+  login(login: string, password: string): Observable<any> {
+    const body = { login, password };
+    return this.http.post<any>(environment.backendHost + '/auth/login', body, { withCredentials: true })
+  }
+
+  saveAuthData(token: string, userData: any): void {
+    this.token = token;
+    this.loggedIn = true;
+    this.isAdmin = userData.admin;
+    this.isProf = userData.enseignant;
+    this.name = `${userData.nom} ${userData.prenom}`;
+    this.id = userData.id;
     
-    return this.http.post<any>(environment.backendHost + '/auth/login', loginData, {
-      withCredentials: true,
-    }).pipe(
-      tap((response) => {
-        if (response.token) {
-          this.token = response.token;
-          this.name = response.nom;  
-          this.id = response.id;
-          this.isAdmin = response.isAdmin;
-          this.isProf = response.isProf;
-          this.loggedIn = true;
-
-          this.cookieService.set('auth_token', this.token, { expires: new Date(Date.now() + 3600 * 1000) });
-          this.cookieService.set('user_id', this.id.toString(), { expires: new Date(Date.now() + 3600 * 1000) });
-        }
-      })
-    );
-  }
-
-  logout(id: number): Observable<boolean> {
-    this.cookieService.delete('auth_token');
-    this.cookieService.delete('user_id');
-    this.cookieService.delete('username');
-
-    return this.http.get<boolean>(environment.backendHost + '/auth/logout/' + id).pipe(
-      tap(() => {
-        this.loggedIn = false;
-        this.isAdmin = false;
-        this.isProf = false;
-        this.name = '';
-        this.token = '';
-        this.id = 0;
-      })
-    );
-  }
-
-  isUserLoggedIn(): boolean {
-    return this.loggedIn;
+    // Store authentication data in cookies
+    this.cookieService.set('authToken', token);
+    this.cookieService.set('username', this.name);
+    this.cookieService.set('userId', String(this.id));
+    this.cookieService.set('role', userData.admin ? 'Administrateur' : 'Enseignant');
   }
 
   getAuthToken(): string {
-    return this.cookieService.get('auth_token');
+    return this.cookieService.get('authToken');
+  }
+
+  logout(userId: number): Observable<any> {
+    return this.http.post(environment.backendHost + '/auth/logout', { userId }).pipe(
+      shareReplay(1),
+      tap(() => {
+        this.cookieService.deleteAll();
+        this.loggedIn = false;
+        this.token = '';
+        this.id = 0;
+        this.name = '';
+        this.isAdmin = false;
+        this.isProf = false;
+      })
+    );
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getAuthToken();
+    return token !== null && token !== '';
   }
 }

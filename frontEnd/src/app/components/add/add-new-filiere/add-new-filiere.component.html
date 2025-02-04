@@ -55,13 +55,13 @@
               <div class="form-group local-forms">
                 <label>département<span class="login-danger">*</span></label>
                 <select class="form-control" formControlName="departement">
-                  <option *ngFor="let dep of departements" [value]="dep.libelle">{{ dep.libelle }}</option>
+                  <option *ngFor="let dep of departements" [value]="dep.id">{{ dep.libelle }}</option>
                 </select>
               </div>
             </div>
             <div class="col-12 d-flex align-items-center justify-content-center">
               <div class="student-submit">
-                <button type="submit" class="btn btn-primary">Confirmer</button>
+                <button type="submit" class="btn btn-primary" (click)="handleAddFiliere()">Confirmer</button>
               </div>
             </div>
             <hr class="mt-4" />

@@ -13,8 +13,12 @@ export class DepartmentService {
 
   constructor(private http: HttpClient) { }
 
-  public searchDepartments(keyword: string, page: number, size: number): Observable<PageDepartment> {
-    return this.http.get<PageDepartment>(`${environment.backendHost}/departements/search?keyword=${keyword}&page=${page}&size=${size}`);
+  public searchDepartments(keyword: string, page: number=1, size: number=10): Observable<PageDepartment> {
+    return this.http.get<PageDepartment>(`${environment.backendHost}/departements/search?keyword=${keyword}&page=${page}&limt=${size}`);
+  }
+
+  public searchDepartments2(): Observable<number> {
+    return this.http.get<number>(`${environment.backendHost}/departements/search`);
   }
 
   public saveDepartment(department: Departement): Observable<Departement> {

@@ -16,7 +16,7 @@
   </div>
 
   <ng-container *ngIf="login; else page">
-    <app-login></app-login>
+    <app-login [showLogin]="login"></app-login>
   </ng-container>
 
   <ng-template #page>

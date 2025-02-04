@@ -12,7 +12,15 @@ export class SalleService {
   constructor(private http: HttpClient) { }
 
   public getSalles(page: number, size: number): Observable<PageSalle> {
-    return this.http.get<PageSalle>(environment.backendHost + "/salles?page=" + page + "&size=" + size);
+    return this.http.get<PageSalle>(environment.backendHost + "/salles?page=" + page + "&limit=" + size);
+  }
+
+  public getSallescount(): Observable<number> {
+    return this.http.get<number>(environment.backendHost + "/salles/count");
+  }
+
+  public getSalles2(): Observable<Salle[]> {
+    return this.http.get<Salle[]>(environment.backendHost + "/salles");
   }
 
   public searchSalles(keyword: string, page: number, size: number): Observable<PageSalle> {

@@ -33,6 +33,8 @@ export class GestionFiliereComponent implements OnInit{
       keyword: this.fb.control('')
     });
     this.handleSearchFilieres();
+    this.getallFilieres()
+    
   }
   handleEditeFiliere(filiereEdit: Filiere) {
     this.router.navigateByUrl('/filieres/edit',{state :filiereEdit});
@@ -111,5 +113,18 @@ export class GestionFiliereComponent implements OnInit{
       this.handleSearchFilieres();
     }
   }
+
+  getallFilieres(): void {
+        this.filiereService.getAllFilieres().subscribe(
+          (data: Filiere[]) => {
+            this.filieres = data;
+            console.log(this.filieres)
+            console.log("hi")
+          },
+          (error) => {
+            console.error('Error fetching departments:', error);
+          }
+        );
+      }
 
 }

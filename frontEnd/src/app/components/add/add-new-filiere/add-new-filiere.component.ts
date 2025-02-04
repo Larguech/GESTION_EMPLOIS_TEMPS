@@ -38,6 +38,7 @@ export class AddNewFiliereComponent implements OnInit {
     this.departementService.getDepartements().subscribe(
       (data: Departement[]) => {
         this.departements = data;
+        console.log(data)
       },
       (error: any) => {
         console.log(error);
@@ -48,6 +49,7 @@ export class AddNewFiliereComponent implements OnInit {
   handleAddFiliere() {
     if (this.newFiliereFormGroup.valid) {
       const newFiliere: Filiere = this.newFiliereFormGroup.value;
+      console.log(newFiliere)
       this.filiereService.saveFiliere(newFiliere).subscribe({
         next: () => {
           Swal.fire('Succès', 'Filière ajoutée avec succès', 'success');

@@ -22,10 +22,10 @@ export class GestionProfComponent implements OnInit {
   currentPage: number = 0;
   totalelements:number=0;
   displayedPages: number[] = [];
-  option1:number=0;
-  option2:number=0;
-  option3:number=0;
-  option4:number=0;
+  option1:number=10;
+  option2:number=20;
+  option3:number=30;
+  option4:number=40;
 
   constructor(
     private profService: ProfServiceService,
@@ -37,6 +37,7 @@ export class GestionProfComponent implements OnInit {
     this.searchFormGroup = this.fb.group({
       keyword: this.fb.control('')
     });
+    this.getallProfs()
     this.handleSearchCustomers();
     
   } 
@@ -121,4 +122,17 @@ export class GestionProfComponent implements OnInit {
       this.handleSearchCustomers();
     }
   }
+
+  getallProfs(): void {
+          this.profService.getProfs2().subscribe(
+            (data: Prof[]) => {
+              this.profs = data;
+              console.log(this.profs)
+              console.log("hi")
+            },
+            (error) => {
+              console.error('Error fetching departments:', error);
+            }
+          );
+        }
 }

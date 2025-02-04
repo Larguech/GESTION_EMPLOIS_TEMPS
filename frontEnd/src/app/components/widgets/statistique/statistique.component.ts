@@ -23,33 +23,36 @@ export class StatistiqueComponent  implements OnInit
       this.getNbDepartements();
       this.getNbProfs();
       this.getNbClasses();
+      
       this.getNbSalles();
     }
     getNbDepartements() {
-       this.dpService.searchDepartments("",0,6).subscribe(
+       this.dpService.searchDepartments2().subscribe(
       (data) => {
-        this.nombreDepartements= data.totalElements;
+        this.nombreDepartements= data;
       }
     );
     }
     getNbProfs() {
-      this.prfService.getProfs(0,6).subscribe(
+      this.prfService.getProfscount().subscribe(
       (data) => {
-        this.nombreProfs= data.totalElements;
+        this.nombreProfs= data;
       }
     );
     }
     getNbClasses() {
-      this.clsService.getClasses(0,6).subscribe(
+      this.clsService.getClasses2().subscribe(
       (data) => {
-        this.nombreClasses= data.totalElements;
+        this.nombreClasses= data;
+        console.log(this.nombreClasses)
+        console.log("hi")
       }
     );
     }
     getNbSalles() {
-      this.salleService.getSalles(0,6).subscribe(
+      this.salleService.getSallescount().subscribe(
       (data) => {
-        this.nombreSalles= data.totalElements;
+        this.nombreSalles= data;
       }
     );
     }

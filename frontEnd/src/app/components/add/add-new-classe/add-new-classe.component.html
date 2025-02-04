@@ -49,6 +49,17 @@
                 </select>
               </div>
             </div>
+             <!--add the filiere id input-->
+            <div class="col-12 col-sm-4">
+              <div class="form-group local-forms">
+                <label>filièreId<span class="login-danger">*</span></label>
+                <select class="form-control" formControlName="filiere">
+                  <option value="" disabled selected>Choisir une filièreID</option>
+                  <option *ngFor="let id of filieresid" [value]="id">{{ id }}</option>
+                </select>
+              </div>
+            </div>
+            <!---->
             <div class="col-12 d-flex align-items-center justify-content-center">
               <div class="student-submit">
                 <button type="submit" class="btn btn-primary">Confirmer</button>

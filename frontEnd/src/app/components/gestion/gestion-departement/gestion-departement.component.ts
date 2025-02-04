@@ -31,6 +31,7 @@ export class GestionDepartmentComponent implements OnInit {
       keyword: this.fb.control('')
     });
     this.handleSearchDepartments();
+    this.getDepartements();
   }
    handleEditeDepart(departEdit: Departement) {
     this.router.navigateByUrl('/departements/edit',{state :departEdit});
@@ -109,5 +110,16 @@ export class GestionDepartmentComponent implements OnInit {
       this.page = this.currentPage;
       this.handleSearchDepartments();
     }
+  }
+
+  getDepartements(): void {
+    this.departmentService.getDepartements().subscribe(
+      (data: Departement[]) => {
+        this.departments = data;
+      },
+      (error) => {
+        console.error('Error fetching departments:', error);
+      }
+    );
   }
 }

@@ -15,6 +15,14 @@ export class ProfServiceService {
    public getProfs(page: number, size: number): Observable<PageProf> {
     return this.http.get<PageProf>(environment.backendHost + "/enseignants?page=" + page + "&size=" + size);
   }
+
+  public getProfscount(): Observable<number> {
+    return this.http.get<number>(environment.backendHost + "/enseignants/count");
+  }
+
+  public getProfs2(): Observable<Prof[]> {
+    return this.http.get<Prof[]>(environment.backendHost + "/enseignants");
+  }
   public searchProfs(keyword : string,page: number, size: number):Observable<PageProf>{
     return this.http.get<PageProf>(environment.backendHost+"/enseignants/search?keyword="+keyword+"&page=" + page + "&size=" + size)
   }

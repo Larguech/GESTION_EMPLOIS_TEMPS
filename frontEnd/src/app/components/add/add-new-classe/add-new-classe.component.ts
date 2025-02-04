@@ -13,7 +13,8 @@ import { FiliereService } from '../../../services/filiere.service';
 })
 export class AddNewClasseComponent implements OnInit {
   newClassFormGroup!: FormGroup;
-  filieres: string[] = [];
+  filieres: string[] = ["GL","RT","IIA","IMEI"];
+  filieresid: number[]=[]
 
   constructor(
     private fb: FormBuilder,
@@ -26,6 +27,7 @@ export class AddNewClasseComponent implements OnInit {
       libelle: [null, Validators.required],
       nbrEleves: [null, Validators.required],
       filiere: [null, Validators.required],
+      filiereID:[null, Validators.required],
     });
 
     this.fetchFilieres();
@@ -35,9 +37,12 @@ export class AddNewClasseComponent implements OnInit {
     this.filiereService.getAllFilieres().subscribe(
       (filieres: Filiere[]) => {
         this.filieres = filieres.map(filiere => filiere.libelle);
+        this.filieresid=filieres.map(filiere=> filiere.id)
         console.log(this.filieres);
+        console.log(this.filieresid)
         if (this.filieres.length > 0) {
           this.newClassFormGroup.patchValue({ filiere: this.filieres[0] });
+          this.newClassFormGroup.patchValue({ filiereID: this.filieresid[0] });
         }
       },
       (error) => {
@@ -48,8 +53,11 @@ export class AddNewClasseComponent implements OnInit {
 
   handleAddClasse() {
     if (this.newClassFormGroup.valid) {
-      const newClasse: Classe = this.newClassFormGroup.value;
-      this.clService.saveClasse(newClasse).subscribe(
+      // Get the form values
+      const { libelle, nbrEleves, filiere, filiereID } = this.newClassFormGroup.value
+      const newClasse: Classe = this.newClassFormGroup.value
+      const id:number = filiereID;
+      this.clService.saveClasse(newClasse,id).subscribe(
         (data) => {
           Swal.fire('Succès', 'Classe ajoutée avec succès', 'success');
           // Reset the form

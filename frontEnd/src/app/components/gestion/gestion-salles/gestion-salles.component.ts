@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PageSalle } from 'src/app/models/profPage.models';
 import { Salle } from 'src/app/models/salles.models';
 import { SalleService } from 'src/app/services/salle.service';
 import Swal from 'sweetalert2';
@@ -11,7 +12,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./gestion-salles.component.css']
 })
 export class GestionSallesComponent implements OnInit {
-  salles: Salle[] = [];
+  salles:Salle[]=[]
+  sallesPagination: PageSalle={
+    content: [],
+    totalPages: 0,
+    totalElements: 0,
+    size: 10, // Default page size
+    number: 0,
+    numberOfElements: 0
+  };
   errorMessage: string = '';
   searchFormGroup!: FormGroup;
   page: number = 0;
@@ -28,10 +37,14 @@ export class GestionSallesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("exe")
+    this.getSalles()
     this.searchFormGroup = this.fb.group({
       keyword: this.fb.control(''),
     });
+    
     this.handleSearchSalles();
+    
   }
 
 
@@ -111,4 +124,16 @@ export class GestionSallesComponent implements OnInit {
       this.handleSearchSalles();
     }
   }
+
+  getSalles(): void {
+      this.salleService.getSalles2().subscribe(
+        (data: Salle[]) => {
+          this.salles = data;
+          console.log(this.salles)
+        },
+        (error) => {
+          console.error('Error fetching departments:', error);
+        }
+      );
+    }
 }
