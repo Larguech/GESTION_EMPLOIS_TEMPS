@@ -38,6 +38,7 @@ export class GestionFiliereComponent implements OnInit{
   }
   handleEditeFiliere(filiereEdit: Filiere) {
     this.router.navigateByUrl('/filieres/edit',{state :filiereEdit});
+    this.editfiliere(filiereEdit.id,filiereEdit)
   }
   handleChangeSize($event: Event) {
     this.size = parseInt((<HTMLInputElement>$event.target).value);
@@ -125,6 +126,10 @@ export class GestionFiliereComponent implements OnInit{
             console.error('Error fetching departments:', error);
           }
         );
+      }
+
+  editfiliere(id:number,editfiliere:Filiere):void{
+      this.filiereService.updateFiliere(id,editfiliere)
       }
 
 }

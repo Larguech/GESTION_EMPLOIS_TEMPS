@@ -51,6 +51,7 @@ export class GestionSallesComponent implements OnInit {
 
   handleEditSalle(salle: Salle) {
     this.router.navigateByUrl('/salles/edit', { state: salle });
+    this.editsalle(salle.id,salle)
   }
 
   handleDeleteSalle(salle: Salle) {
@@ -136,4 +137,8 @@ export class GestionSallesComponent implements OnInit {
         }
       );
     }
+
+  editsalle(id:number,salle:Salle):void{
+      this.salleService.updateSalle(id,salle)
+   }
 }

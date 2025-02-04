@@ -41,12 +41,14 @@ export class EditClasseComponent implements OnInit {
     }
   }
   handleUpdateClasse() {
-
+    console.log("Ghassen is wright")
+    console.log(this.classe)
     if (this.editClasseFormGroup.valid && this.classe) {
       const updatedClasse: Classe = {
         ...this.classe,
         ...this.editClasseFormGroup.value
       };
+      console.log(updatedClasse)
       this.clService.updateClasse(updatedClasse.id,updatedClasse).subscribe((data) => {
           Swal.fire( 'Succès', 'Classe modifié avec succès','success');
           this.router.navigateByUrl('/classes');

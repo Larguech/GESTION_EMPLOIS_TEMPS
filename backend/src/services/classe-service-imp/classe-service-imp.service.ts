@@ -63,11 +63,13 @@ export class ClasseService  {
   }
 
   
-  async updateClasse(id: number, classe: Classe): Promise<Classe> {
+  async updateClasse(id: number, classe: Classe){
     classe.id = id;
     console.log('........id filiere updateClasse .......');
     console.log(classe.filiere?.id);
-    return await this.classeRepository.save(classe);
+    // return await this.classeRepository.save(classe);
+    await this.getClasseById(id); // Vérifie si l'ID existe avant
+    return await this.classeRepository.update(id, classe);
   }
   /** 
    * 

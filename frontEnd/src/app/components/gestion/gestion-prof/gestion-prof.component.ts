@@ -44,6 +44,7 @@ export class GestionProfComponent implements OnInit {
 
   handleEditeProf(profedit: Prof) {
     this.router.navigateByUrl('/profs/edit',{state :profedit});
+    this.editprof(profedit.id,profedit)
   }
     handleChangeSize($event: Event) {
       this.size = parseInt((<HTMLInputElement>$event.target).value);
@@ -135,4 +136,8 @@ export class GestionProfComponent implements OnInit {
             }
           );
         }
+
+  editprof(id:number,prof:Prof):void{
+    this.profService.updateProf(id,prof)
+   }
 }

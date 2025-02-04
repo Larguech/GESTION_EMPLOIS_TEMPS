@@ -33,7 +33,7 @@ export class ClasseControllerController {
     }
     
     @Put(":id")
-    async updateClasse(@Param('id')id,@Body() updatedclasse): Promise<Classe>{
+    async updateClasse(@Param('id')id,@Body() updatedclasse){
         return this.classeservice.updateClasse(id,updatedclasse);
     }
     

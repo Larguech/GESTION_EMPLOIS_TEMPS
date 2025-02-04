@@ -35,6 +35,7 @@ export class GestionClasseComponent implements OnInit {
   }
   handleEditeClasse(classeEdit: Classe) {
     this.router.navigateByUrl('/classes/edit',{state :classeEdit});
+    this.editclasse(classeEdit.id,classeEdit)
   }
 
   handleChangeSize($event: Event) {
@@ -124,4 +125,8 @@ export class GestionClasseComponent implements OnInit {
             }
           );
         }
+
+  editclasse(id:number,salle:Classe):void{
+        this.classeService.updateClasse(id,salle)
+       }
 }
