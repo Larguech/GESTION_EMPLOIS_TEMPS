@@ -12,6 +12,7 @@ export class EnseignantService {
         private enseignantRepository:EnseignantRepository
     ){}
     async addEnseignant(enseignant:Enseignant):Promise<Enseignant>{
+        enseignant.Role="PROF"
         return this.enseignantRepository.save(enseignant);
     }
 
